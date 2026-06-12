@@ -1,0 +1,36 @@
+@if (sidebarService.isOpen()) {
+  <div class="fixed inset-x-0 bottom-0 top-14 z-40 flex">
+
+    <div
+      (click)="sidebarService.close()"
+      class="fixed inset-x-0 bottom-0 top-14 bg-black/40 backdrop-blur-sm">
+    </div>
+
+    <aside class="relative flex flex-col w-64 h-full bg-white text-gray-800 shadow-xl z-50 border-t border-gray-100">
+
+      <div class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+        <h1 class ="text-xl font-bold text-gray-900 tracking-tight flex items-center gap-2 justify-center m-4"> Espace personnel</h1>
+        @if (authService.currentUser(); as user) {
+
+          <div
+            class="h-12 w-12 bg-rose-500 rounded-full flex items-center justify-center text-white font-bold uppercase shadow-inner border-2 border-white ring-1 ring-gray-200 group overflow-hidden mx-auto mb-4 mt-2">
+            <span class="text-xl">{{ user.name.charAt(0) }}</span>
+          </div>
+
+          <a routerLink="/" (click)="sidebarService.close()"
+             class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-gray-100 font-medium transition-colors">
+            <i class="fa-solid fa-house text-lg w-6"></i> Accueil
+          </a>
+          <h1 class ="text-xl font-bold text-gray-900 tracking-tight flex items-center gap-2 justify-center m-4"> Playlist vidéos</h1>
+        } @else {
+
+            <a routerLink="/auth/login" (click)="sidebarService.close()"
+               class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-gray-100 font-medium transition-colors">
+              <i class="fa-solid fa-house text-lg w-6"></i> Se connecter
+            </a>
+        }
+      </div>
+
+    </aside>
+  </div>
+}

@@ -1,0 +1,55 @@
+<div class="min-h-screen bg-gray-50 flex flex-col items-center pt-12 px-4">
+
+  <div class="text-center mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 tracking-tight flex items-center gap-2 justify-center">
+      <i class="fa-solid fa-magnifying-glass text-red-600"></i> Rechercher sur MyYoutube
+    </h1>
+  </div>
+
+  <div class="w-full max-w-2xl bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+    <form (submit)="onSearch($event)" class="flex w-full items-center">
+
+      <div class="relative flex-1">
+        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        <input
+          type="text"
+          [formControl]="searchControl"
+          placeholder="Entrez vos mots-clés..."
+          class="w-full h-12 pl-12 pr-4 bg-gray-50 border border-gray-200 rounded-l-full focus:outline-none focus:bg-white focus:border-red-500 focus:ring-2 focus:ring-red-100 transition-all text-gray-800 text-lg"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="h-12 px-6 bg-red-600 hover:bg-red-700 text-white font-medium rounded-r-full shadow-md hover:shadow-lg transition-all flex items-center gap-2 active:scale-95 cursor-pointer">
+        <span>Rechercher</span>
+        <i class="fa-solid fa-arrow-right text-sm"></i>
+      </button>
+
+    </form>
+  </div>
+  <div class="w-full max-w-4xl mt-12">
+  </div>
+  @if (videoResource.isLoading()) {
+    <div class="flex justify-center my-8">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600"></div>
+    </div>
+  }
+
+  @if (videoResource.value(); as response) {
+    <div class="space-y-4">
+      @for (video of response.items; track video.id.videoId) {
+        <a [routerLink]="['/video',video.id.videoId]"
+           class="bg-white p-4 rounded-xl shadow-sm flex gap-4 transition-all hover:shadow-md cursor-pointer hover:scale-105">
+          <img [src]="video.snippet.thumbnails.medium.url" class="w-40 rounded-lg object-cover"
+               [alt]="video.snippet.title" />
+          <div>
+            <h3 class="font-bold text-lg text-gray-900">{{ video.snippet.title }}</h3>
+            <p class="text-sm text-gray-500">{{ video.snippet.channelTitle }}</p>
+            <p class="text-sm text-gray-400 mt-1 line-clamp-2">{{ video.snippet.description }}</p>
+          </div>
+        </a>
+      }
+    </div>
+  }
+</div>
